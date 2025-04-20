@@ -12,6 +12,7 @@
         "start": "npx ng serve",
         "build": "npx ng build",
         "build-dev": "npx ng build -c dev",
+        "docker-build": "docker build -f .docker/Dockerfile -t dnd-mapp/dma-asu .",
         "test": "npx ng test",
         "test-dev": "npx ng test -c dev",
         "lint": "npx ng lint",
