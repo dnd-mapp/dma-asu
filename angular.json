@@ -1,0 +1,123 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "dma-asu": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "changeDetection": "OnPush",
+                    "style": "scss"
+                }
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "dma",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:application",
+                    "options": {
+                        "allowedCommonJsDependencies": [],
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "public"
+                            }
+                        ],
+                        "baseHref": "./",
+                        "browser": "src/main.ts",
+                        "index": "src/index.html",
+                        "inlineStyleLanguage": "scss",
+                        "outputPath": "dist/dma-asu",
+                        "polyfills": ["zone.js"],
+                        "scripts": [],
+                        "styles": ["src/styles.scss"],
+                        "tsConfig": "tsconfig.app.json"
+                    },
+                    "defaultConfiguration": "prod",
+                    "configurations": {
+                        "prod": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "500kB",
+                                    "maximumError": "1MB"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "4kB",
+                                    "maximumError": "8kB"
+                                }
+                            ],
+                            "outputHashing": "all",
+                            "subresourceIntegrity": true,
+                            "watch": false
+                        },
+                        "dev": {
+                            "namedChunks": true,
+                            "optimization": false,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "watch": true
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "host": "localhost.dndmapp.net",
+                        "hmr": false,
+                        "port": 433,
+                        "ssl": true,
+                        "sslCert": "certificate.pem",
+                        "sslKey": "certificate-key.pem"
+                    },
+                    "defaultConfiguration": "dev",
+                    "configurations": {
+                        "prod": {
+                            "buildTarget": "dma-asu:build:prod"
+                        },
+                        "dev": {
+                            "buildTarget": "dma-asu:build:dev"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "public"
+                            }
+                        ],
+                        "codeCoverage": false,
+                        "inlineStyleLanguage": "scss",
+                        "karmaConfig": "karma.conf.js",
+                        "polyfills": ["zone.js", "zone.js/testing"],
+                        "scripts": [],
+                        "styles": ["src/styles.scss"],
+                        "tsConfig": "tsconfig.spec.json"
+                    },
+                    "defaultConfiguration": "ci",
+                    "configurations": {
+                        "ci": {
+                            "watch": false
+                        },
+                        "dev": {
+                            "watch": true
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": "eslint.config.js",
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                    }
+                }
+            }
+        }
+    }
+}
