@@ -10,21 +10,21 @@ inputs:
 outputs:
     tags:
         description: The generated Docker image tags
-        value: ${{ steps.setup-metadata.outputs.tags }}
+        value: ${{ steps.setup-metadata-release.outputs.tags || steps.setup-metadata-edge.outputs.tags }}
     labels:
         description: The generated Docker image labels
-        value: ${{ steps.setup-metadata.outputs.labels }}
+        value: ${{ steps.setup-metadata-release.outputs.labels || steps.setup-metadata-edge.outputs.labels }}
     version:
         description: The generated Docker image version
-        value: ${{ steps.setup-metadata.outputs.version }}
+        value: ${{ steps.setup-metadata-release.outputs.version || steps.setup-metadata-edge.outputs.version }}
     annotataions:
         description: The generated Docker image annotations
-        value: ${{ steps.setup-metadata.outputs.annotations }}
+        value: ${{ steps.setup-metadata-release.outputs.annotations || steps.setup-metadata-edge.outputs.annotations }}
 runs:
     using: composite
     steps:
         - name: Set up Docker metadata
-          id: setup-metadata
+          id: setup-metadata-release
           if: inputs.release-tags
           uses: docker/metadata-action@v5
           with:
@@ -36,7 +36,7 @@ runs:
                   type=edge
                   latest
         - name: Set up Docker metadata
-          id: setup-metadata
+          id: setup-metadata-edge
           if: inputs.release-tags == false
           uses: docker/metadata-action@v5
           with:
