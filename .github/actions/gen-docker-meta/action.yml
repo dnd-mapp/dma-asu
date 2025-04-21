@@ -1,0 +1,45 @@
+name: Generate Docker image metadata
+description: Generates metadata for the Docker image
+inputs:
+    release-tags:
+        description: Should tags be generated for the release
+        required: true
+    image-name:
+        description: The name of the Docker image
+        required: true
+outputs:
+    tags:
+        description: The generated Docker image tags
+        value: ${{ steps.setup-metadata.outputs.tags }}
+    labels:
+        description: The generated Docker image labels
+        value: ${{ steps.setup-metadata.outputs.labels }}
+    version:
+        description: The generated Docker image version
+        value: ${{ steps.setup-metadata.outputs.version }}
+    annotataions:
+        description: The generated Docker image annotations
+        value: ${{ steps.setup-metadata.outputs.annotations }}
+runs:
+    using: composite
+    steps:
+        - name: Set up Docker metadata
+          id: setup-metadata
+          if: inputs.release-tags
+          uses: docker/metadata-action@v5
+          with:
+              images: ${{ inputs.image-name }}
+              tags: |
+                  type=semver,pattern={{major}}
+                  type=semver,pattern={{major}}.{{minor}}
+                  type=semver,pattern={{version}}
+                  type=edge
+                  latest
+        - name: Set up Docker metadata
+          id: setup-metadata
+          if: inputs.release-tags == false
+          uses: docker/metadata-action@v5
+          with:
+              images: ${{ inputs.image-name }}
+              tags: |
+                  type=edge
