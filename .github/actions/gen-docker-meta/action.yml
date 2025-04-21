@@ -10,22 +10,22 @@ inputs:
 outputs:
     tags:
         description: The generated Docker image tags
-        value: ${{ steps.setup-metadata-release.outputs.tags || steps.setup-metadata-edge.outputs.tags }}
+        value: ${{ steps.setup-metadata-edge.outputs.tags || steps.setup-metadata-release.outputs.tags }}
     labels:
         description: The generated Docker image labels
-        value: ${{ steps.setup-metadata-release.outputs.labels || steps.setup-metadata-edge.outputs.labels }}
+        value: ${{ steps.setup-metadata-edge.outputs.labels || steps.setup-metadata-release.outputs.labels }}
     version:
         description: The generated Docker image version
-        value: ${{ steps.setup-metadata-release.outputs.version || steps.setup-metadata-edge.outputs.version }}
+        value: ${{ steps.setup-metadata-edge.outputs.version || steps.setup-metadata-release.outputs.version }}
     annotataions:
         description: The generated Docker image annotations
-        value: ${{ steps.setup-metadata-release.outputs.annotations || steps.setup-metadata-edge.outputs.annotations }}
+        value: ${{ steps.setup-metadata-edge.outputs.annotations || steps.setup-metadata-release.outputs.annotations }}
 runs:
     using: composite
     steps:
         - name: Set up Docker metadata
           id: setup-metadata-release
-          if: inputs.release-tags
+          if: ${{ inputs.release-tags == true }}
           uses: docker/metadata-action@v5
           with:
               images: ${{ inputs.image-name }}
