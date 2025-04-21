@@ -23,9 +23,22 @@ outputs:
 runs:
     using: composite
     steps:
-        - name: Set up Docker metadata
+        - name: Set up Docker metadata for edge
+          id: setup-metadata-edge
+          if: inputs.release-tags == false
+          uses: docker/metadata-action@v5
+          with:
+              images: ${{ inputs.image-name }}
+              tags: |
+                  type=schedule,enable=false
+                  type=ref,event=branch,enable=false
+                  type=ref,event=tag,enable=false
+                  type=ref,event=pr,enable=false
+                  type=raw,value=latest,enable=false
+                  type=raw,value=edge
+        - name: Set up Docker metadata for release
           id: setup-metadata-release
-          if: ${{ inputs.release-tags == true }}
+          if: inputs.release-tags == true
           uses: docker/metadata-action@v5
           with:
               images: ${{ inputs.image-name }}
@@ -38,16 +51,3 @@ runs:
                   type=semver,pattern={{major}}.{{minor}}
                   type=semver,pattern={{version}}
                   type=raw,value=latest
-        - name: Set up Docker metadata
-          id: setup-metadata-edge
-          if: ${{ inputs.release-tags == false }}
-          uses: docker/metadata-action@v5
-          with:
-              images: ${{ inputs.image-name }}
-              tags: |
-                  type=schedule,enable=false
-                  type=ref,event=branch,enable=false
-                  type=ref,event=tag,enable=false
-                  type=ref,event=pr,enable=false
-                  type=raw,value=latest,enable=false
-                  type=raw,value=edge
