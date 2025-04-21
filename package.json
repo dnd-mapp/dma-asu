@@ -1,7 +1,7 @@
 {
     "name": "@dnd-mapp/dma-asu",
     "version": "0.0.0",
-    "license": "AGPL-3.0",
+    "license": "AGPL-3.0-only",
     "description": "UI for the DnD-Mapp Authentication Server.",
     "repository": {
         "url": "git+https://github.com/dnd-mapp/dma-asu.git",
