@@ -43,3 +43,4 @@ runs:
               images: ${{ inputs.image-name }}
               tags: |
                   type=edge
+                  type=raw,value=latest,enable=false
