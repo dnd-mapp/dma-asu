@@ -25,7 +25,7 @@ runs:
     steps:
         - name: Set up Docker metadata
           id: setup-metadata-release
-          if: ${{ inputs.release-tags == true }}
+          if: inputs.release-tags
           uses: docker/metadata-action@v5
           with:
               images: ${{ inputs.image-name }}
