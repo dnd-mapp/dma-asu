@@ -1,0 +1,14 @@
+.angular/
+dist/
+reports/
+
+.github/
+
+node_modules/
+
+.idea/
+.vscode/
+
+.editorconfig
+
+certificate*.pem
