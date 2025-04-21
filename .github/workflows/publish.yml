@@ -22,7 +22,7 @@ jobs:
                 platform:
                     - amd64
                     - arm64
-                    - arm/v7
+                    - arm
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
