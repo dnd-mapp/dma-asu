@@ -64,7 +64,7 @@ jobs:
               run: |
                   mkdir -p ${{ runner.temp }}/digests
                   digests="${{ steps.docker-build.outputs.digest }}"
-                  touch "${{ runner.temp }}/digests/${digests#sha256:}"
+                  touch "${{ runner.temp }}/digests/${digest#sha256:}"
             - name: Upload Docker image digests
               uses: actions/upload-artifact@v4
               with:
