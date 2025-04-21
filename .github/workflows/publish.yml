@@ -1,0 +1,104 @@
+name: Publish
+permissions:
+    contents: read
+    packages: write
+on:
+    pull_request: # TODO: Remove once tested
+    push:
+        branches:
+            - main
+    release:
+        types:
+            - released
+env:
+    IMAGE_NAME: ghcr.io/dnd-mapp/dma-asu
+jobs:
+    build-images:
+        name: Create Docker image
+        runs-on: ubuntu-22.04
+        continue-on-error: false
+        strategy:
+            matrix:
+                platform:
+                    - amd64
+                    - arm64
+                    - arm/v7
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Set up Docker metadata
+              id: setup-metadata
+              uses: ./.github/actions/gen-docker-meta
+              with:
+                  image-name: ${{ env.IMAGE_NAME }}
+                  release-tags: ${{ startsWith(github.head_ref, 'release/') }}
+            - name: Login to GCR
+              uses: ./.github/actions/docker-login
+              with:
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Set up QEMU
+              id: setup-qemu
+              uses: docker/setup-qemu-action@v3
+              with:
+                  platforms: ${{ matrix.platform }}
+            - name: Set up Docker Buildx
+              id: setup-buildx
+              uses: docker/setup-buildx-action@v3
+              with:
+                  platforms: ${{ steps.setup-qemu.outputs.platforms }}
+            - name: Build and push
+              uses: docker/build-push-action@v6
+              id: docker-build
+              with:
+                  platforms: ${{ steps.setup-buildx.outputs.platforms }}
+                  context: .
+                  file: .docker/Dockerfile
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max
+                  tags: ${{ steps.setup-metadata.outputs.tags }}
+                  labels: ${{ steps.setup-metadata.outputs.labels }}
+                  annotations: ${{ steps.setup-metadata.outputs.annotataions }}
+                  outputs: type=image,push-by-digest=true,name-canonical=true,push=true
+            - name: Export Docker image digests
+              run: |
+                  mkdir -p ${{ runner.temp }}/digests
+                  digests="${{ steps.docker-build.outputs.digest }}"
+                  touch "${{ runner.temp }}/digests/${digests#sha256:}"
+            - name: Upload Docker image digests
+              uses: actions/upload-artifact@v4
+              with:
+                  name: digests-${{ matrix.platform }}
+                  path: ${{ runner.temp }}/digests/*
+                  if-no-files-found: error
+                  retention-days: 1
+    merge-digests:
+        runs-on: ubuntu-22.04
+        needs: build-images
+        steps:
+            - name: Download digests
+              uses: actions/download-artifact@v4
+              with:
+                  path: ${{ runner.temp }}/digests
+                  pattern: digests-*
+                  merge-multiple: true
+            - name: Login to GCR
+              uses: ./.github/actions/docker-login
+              with:
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
+            - name: Set up Docker metadata
+              id: setup-metadata
+              uses: ./.github/actions/gen-docker-meta
+              with:
+                  image-name: ${{ env.IMAGE_NAME }}
+                  release-tags: ${{ startsWith(github.head_ref, 'release/') }}
+            - name: Create a manifest list and push
+              working-directory: ${{ runner.temp }}/digests
+              run: |
+                  docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+                  $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
+            - name: Inspect image
+              run: docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.setup-metadata.outputs.version }}
