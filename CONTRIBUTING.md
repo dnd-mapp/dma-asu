@@ -99,7 +99,7 @@ Please follow these guidelines to maintain code consistency.
 
 ## License
 
-By contributing to this repository, you agree that your contributions will be licensed under the [AGPL-3.0 License](./LICENSE.md).
+By contributing to this repository, you agree that your contributions will be licensed under the [AGPL-3.0 License](LICENSE).
 
 ___
 

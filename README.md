@@ -1,6 +1,6 @@
 # @dnd-mapp/dma-asu
 
-[![License](https://img.shields.io/github/license/dnd-mapp/dma-asu)](./LICENSE.md)
+[![License](https://img.shields.io/github/license/dnd-mapp/dma-asu)](LICENSE)
 [![Build](https://github.com/dnd-mapp/dma-asu/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/dnd-mapp/dma-asu/actions/workflows/build.yml)
 
 ## Overview
@@ -176,7 +176,7 @@ Contributions are welcome! Please have a look at the [CONTRIBUTING.md](./CONTRIB
 
 ## License
 
-This project is licensed under the [AGPL-3.0 License](./LICENSE.md). See the LICENSE.md file for details.
+This project is licensed under the [AGPL-3.0 License](LICENSE). See the LICENSE.md file for details.
 
 ---
 
