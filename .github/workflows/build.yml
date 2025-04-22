@@ -8,5 +8,4 @@ on:
             - main
 jobs:
     build-and-test:
-        name: Build & Test
         uses: dnd-mapp/actions/.github/workflows/build.yml@main
