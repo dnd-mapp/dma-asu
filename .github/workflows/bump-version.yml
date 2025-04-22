@@ -15,35 +15,8 @@ on:
                     - patch
 jobs:
     bump-version:
-        name: Bump version
-        runs-on: ubuntu-22.04
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-            - name: Set up Node.js
-              uses: dnd-mapp/actions/setup-node@main
-            - name: Configure Git
-              uses: dnd-mapp/actions/configure-git@main
-            - name: Generate token
-              id: generate-token
-              uses: dnd-mapp/actions/generate-auth-token@main
-              with:
-                  app-id: ${{ secrets.AUTH_APP_ID }}
-                  private-key: ${{ secrets.AUTH_APP_PRIVATE_KEY }}
-            - name: Bump version
-              run: |
-                  npm version ${{ inputs.version }} --git-tag-version false -w packages/dma-ui
-                  npm version ${{ inputs.version }} --git-tag-version false
-            - name: Extract version
-              uses: dnd-mapp/actions/extract-version@main
-            - name: Create Pull request
-              uses: peter-evans/create-pull-request@v7
-              with:
-                  base: main
-                  branch: release/${{ env.VERSION }}
-                  title: Release/${{ env.VERSION }}
-                  body: Bumps the version to ${{ env.VERSION }}
-                  committer: GitHub Actions <actions@github.com>
-                  commit-message: Bump version to ${{ env.VERSION }}
-                  author: GitHub Actions <actions@github.com>
-                  token: ${{ steps.generate-token.outputs.token }}
+        name: Execute
+        uses: dnd-mapp/actions/.github/workflows/bump-version@main
+        secrets: inherit
+        with:
+            version: ${{ inputs.version }}

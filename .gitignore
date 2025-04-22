@@ -10,10 +10,10 @@ node_modules/
 .idea/*
 !.idea/jsLinters
 !.idea/runConfigurations
-!.idea/dma-ui.iml
+!.idea/dma-asu.iml
 !.idea/modules.xml
-!.idea/vcs.xml
 !.idea/prettier.xml
+!.idea/vcs.xml
 
 # Visual Studio Code
 .vscode/*
