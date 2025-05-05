@@ -38,7 +38,7 @@ module.exports = (config) => {
             subdir: '.',
             reporters: [{ type: 'html' }, { type: 'text-summary' }],
         },
-        reporters: ['progress', 'dots', 'kjhtml'],
+        reporters: ['dots', 'kjhtml'],
         browsers: ['ChromeHeadless'],
         restartOnFileChange: true,
         failOnEmptyTestSuite: false,
