@@ -1,8 +1,9 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about TypeScript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "baseUrl": "./",
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
@@ -19,7 +20,9 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "outDir": "dist/out-tsc",
-        "paths": {},
+        "paths": {
+            "@dnd-mapp/dma-asu/testing": ["src/testing/public_api.ts"]
+        },
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "strictBindCallApply": true,
