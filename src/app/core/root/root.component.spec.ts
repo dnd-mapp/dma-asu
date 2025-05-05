@@ -1,7 +1,8 @@
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
+import { RootHarness } from '@dnd-mapp/dma-asu/testing';
 import { appRoutes } from '../config';
 import { RootComponent } from './root.component';
 
@@ -12,21 +13,21 @@ describe('RootComponent', () => {
     })
     class TestComponent {}
 
-    function setupTest() {
+    async function setupTest() {
         TestBed.configureTestingModule({
             imports: [TestComponent],
             providers: [provideRouter(appRoutes)],
         });
 
-        const fixture = TestBed.createComponent(TestComponent);
+        const harnessLoader = TestbedHarnessEnvironment.loader(TestBed.createComponent(TestComponent));
 
         return {
-            fixture: fixture,
+            harness: await harnessLoader.getHarness(RootHarness),
         };
     }
 
-    it('should render', () => {
-        const { fixture } = setupTest();
-        expect(fixture.debugElement.query(By.directive(RootComponent)).nativeElement).toBeDefined();
+    it('should render', async () => {
+        const { harness } = await setupTest();
+        expect(harness).toBeDefined();
     });
 });
