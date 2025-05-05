@@ -25,7 +25,7 @@
                                 "input": "public"
                             }
                         ],
-                        "baseHref": "./",
+                        "baseHref": "/app/",
                         "browser": "src/main.ts",
                         "index": "src/index.html",
                         "inlineStyleLanguage": "scss",
