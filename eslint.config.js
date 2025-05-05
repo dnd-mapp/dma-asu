@@ -37,7 +37,7 @@ module.exports = tseslint.config(
             '@angular-eslint/component-class-suffix': [
                 'error',
                 {
-                    suffixes: ['Component'],
+                    suffixes: ['Component', 'Page'],
                 },
             ],
             'ban/ban': [
