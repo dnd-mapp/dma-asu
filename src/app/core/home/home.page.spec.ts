@@ -1,28 +1,26 @@
+import { TestBed } from '@angular/core/testing';
+
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { RootHarness } from '@dnd-mapp/dma-asu/testing';
-import { appRoutes } from '../config';
-import { RootComponent } from './root.component';
+import { HomeHarness } from '@dnd-mapp/dma-asu/testing';
+import { HomePage } from './home.page';
 
-describe('RootComponent', () => {
+describe('HomePage', () => {
     @Component({
-        template: '<dma-root />',
-        imports: [RootComponent],
+        template: ` <dma-home />`,
+        imports: [HomePage],
     })
     class TestComponent {}
 
     async function setupTest() {
         TestBed.configureTestingModule({
             imports: [TestComponent],
-            providers: [provideRouter(appRoutes)],
         });
 
         const harnessLoader = TestbedHarnessEnvironment.loader(TestBed.createComponent(TestComponent));
 
         return {
-            harness: await harnessLoader.getHarness(RootHarness),
+            harness: await harnessLoader.getHarness(HomeHarness),
         };
     }
 

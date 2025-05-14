@@ -1,12 +1,13 @@
+import { TestBed } from '@angular/core/testing';
+
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { RootHarness } from '@dnd-mapp/dma-asu/testing';
+import { provideRouter, Router } from '@angular/router';
+import { HomeHarness } from '@dnd-mapp/dma-asu/testing';
 import { appRoutes } from '../config';
-import { RootComponent } from './root.component';
+import { RootComponent } from '../root';
 
-describe('RootComponent', () => {
+describe('NotFoundPage', () => {
     @Component({
         template: '<dma-root />',
         imports: [RootComponent],
@@ -20,9 +21,14 @@ describe('RootComponent', () => {
         });
 
         const harnessLoader = TestbedHarnessEnvironment.loader(TestBed.createComponent(TestComponent));
+        const router = TestBed.inject(Router);
+
+        await router.navigateByUrl('/');
 
         return {
-            harness: await harnessLoader.getHarness(RootHarness),
+            harnessLoader: harnessLoader,
+            router: router,
+            harness: await harnessLoader.getHarness(HomeHarness),
         };
     }
 

@@ -5,7 +5,10 @@
 
 ## Overview
 
-**@dnd-mapp/dma-asu** contains the source code for UI of the Authentication Server of the DnD-Mapp platform. This UI allows to manage Users and their permissions via a graphical interface.
+**@dnd-mapp/dma-asu** contains the source code for UI of the Authentication Server of the DnD-Mapp platform. This app allows:
+
+- Managing Users and their permissions.
+- Managing clients and their assign private and public keys for signing JWTs.
 
 ---
 
@@ -34,7 +37,7 @@ Ensure that you have the following requirements prepared:
       nvm use 22.14
       ```
 - [mkcert](https://github.com/FiloSottile/mkcert)  
-  This tool is required to generate a local certificate and key in order to serve the application over https. Visit the GitHub repository of the tool in order to find out more how to install it on your machine.
+  This tool is required to generate a local certificate and key to serve the application over https. Visit the GitHub repository of the tool to find out more how to install it on your machine.
 
 ### Installation
 
@@ -67,14 +70,14 @@ Ensure that you have the following requirements prepared:
    - Generate the certificate and key with the following command:
 
      ```bash
-     mkcert -cert-file certificate.pem -key-file certificate-key.pem localhost.dndmapp.net localhost
+     mkcert -cert-file certificate.pem -key-file certificate-key.pem localhost.auth.dndmapp.net localhost
      ```
 
-5. Add the `localhost.dndmapp.net` host name to the hosts file on your machine.
+5. Add the `localhost.auth.dndmapp.net` host name to the "hosts" file on your machine.
 
     #### For Mac / Linux
 
-    In order to add the host name on a machine running mac, you'll need to:
+    To add the host name on a machine running Mac, you'll need to:
 
     - Open a terminal and enter the following command (you may need to enter your password):
 
@@ -85,14 +88,14 @@ Ensure that you have the following requirements prepared:
     - Add the following line at the end of the file:
 
       ```
-      127.0.0.1 localhost.dndmapp.net
+      127.0.0.1 localhost.auth.dndmapp.net
       ```
 
     - Save the file by pressing `Ctrl + O` and close the editor with `CTRL + X`.
 
     #### For Windows
 
-    In order to add the host name on a machine running Windows, you'll need to:
+    To add the host name on a machine running Windows, you'll need to:
 
     - Open Notepad in Administrator mode
     - Open the following file in Notepad:
@@ -104,7 +107,7 @@ Ensure that you have the following requirements prepared:
     - Add the following line at the end of the file:
 
       ```
-      127.0.0.1 localhost.dndmapp.net
+      127.0.0.1 localhost.auth.dndmapp.net
       ```
 
     - Save the file by pressing `Ctrl + S` after which you may close Notepad.
@@ -116,7 +119,7 @@ Ensure that you have the following requirements prepared:
     Double-click the `certificate.pem` file, you'll be prompted to add the certificate to the login keychain app.
     
     Once added to the keychain, you can then select the created certificate from the `Keychain Access` window.
-    It can be difficult to find when there are multiple certificates.
+    It can be challenging to find when there are multiple certificates.
     
     Select the created certificate and right-click to select `Get Info` from the context menu. Then expand the `Trust` triangle.
     You should then be able to select to `Always Trust` the certificate for `SSL`.
@@ -127,7 +130,7 @@ Ensure that you have the following requirements prepared:
     
     #### Trusting the certificate on Windows
     
-    To add certificate.pem to the Trusted Root Certification Authorities store on Windows I need to start `Microsoft Management Console`.
+    To add certificate.pem to the Trusted Root Certification Authorities store on Windows, you need to start `Microsoft Management Console`.
     This can be done by pressing `<Windows Key> + R` or searching for the `Run` desktop app. Then running run `mmc`.
     
     Then go to `File > Add/Remove Snap-in…` and select `Certificates` for the current user:
@@ -142,7 +145,7 @@ Ensure that you have the following requirements prepared:
 
 ### Running the project
 
-To serve the application locally you can run the following command:
+To serve the application locally, you can run the following command:
 
 ```bash
 npm run start
@@ -152,7 +155,7 @@ npm run start
 
 ## Usage
 
-In order to run tests, run the following command:
+To run tests, run the following command:
 
 ```bash
 npm run test
@@ -176,10 +179,10 @@ Contributions are welcome! Please have a look at the [CONTRIBUTING.md](./CONTRIB
 
 ## License
 
-This project is licensed under the [AGPL-3.0 License](LICENSE). See the LICENSE.md file for details.
+This project is licensed under the [AGPL-3.0 License](LICENSE). See the LICENSE file for details.
 
 ---
 
 ## Acknowledgments
 
-- This repository contains [ESLint](https://eslint.org/) to maintain linting and [Prettier](https://prettier.io/) maintain formatting. Please make sure that your IDEA is correctly configured to run these tools automatically. For the JetBrains editors configuration files are already included to automatically configure the Prettier and ESLint tools so that they're run on every save.
+- This repository contains [ESLint](https://eslint.org/) to maintain linting and [Prettier](https://prettier.io/) maintain formatting. Please make sure that your IDEA is correctly configured to run these tools automatically. For the JetBrains editors, configuration files are already included to automatically configure the Prettier and ESLint tools so that they're run on every save.
