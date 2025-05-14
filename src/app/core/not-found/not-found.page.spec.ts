@@ -21,10 +21,13 @@ describe('NotFoundPage', () => {
         });
 
         const harnessLoader = TestbedHarnessEnvironment.loader(TestBed.createComponent(TestComponent));
+        const router = TestBed.inject(Router);
+
+        await router.navigateByUrl('/');
 
         return {
             harnessLoader: harnessLoader,
-            router: TestBed.inject(Router),
+            router: router,
             harness: await harnessLoader.getHarness(HomeHarness),
         };
     }
